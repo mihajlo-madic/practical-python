@@ -19,7 +19,7 @@ def calculate_prices(filename: str):
     return prices
 
 
-portfolio = pcost.portfolio_cost("Data/portfoliodate.csv")
+portfolio = pcost.read_portfolio("Data/portfoliodate.csv")
 prices = calculate_prices("Data/prices.csv")
 
 pprint(prices)

@@ -1,32 +1,33 @@
+#! /usr/bin/python3
 # pcost.py
 #
 # Exercise 1.27
 
 import csv
 from pprint import pprint
+from stocks import Stock
 
 
-def portfolio_cost(filename: str):
+def read_portfolio(lines: str):
     """Computes total cost contained in a given portfolio"""
-    total_cost = 0
     portfolio = []
-    with open(filename, "rt") as portfolio_file:
-        rows = csv.reader(portfolio_file)
-        headers = next(rows)
-        for i, row in enumerate(rows):
-            record = dict(zip(headers, row))
-            try:
-                shares = int(record["shares"])
-                price = float(record["price"])
-                portfolio.append(record)
-            except ValueError:
-                print(f"Error in line {i}; couldn't parse {row}")
+    rows = csv.reader(lines)
+    headers = next(rows)
+    for i, row in enumerate(rows):
+        record = dict(zip(headers, row))
+        try:
+            record["shares"] = int(record["shares"])
+            record["price"] = float(record["price"])
+            portfolio.append(record)
+        except ValueError:
+            print(f"Error in line {i}; couldn't parse {row}")
     return portfolio
 
 
-portfolio = portfolio_cost("Data/portfoliodate.csv")
-
-total_cost = sum([int(stock["shares"]) * float(stock["price"]) for stock in portfolio])
+with open("Data/portfolio.csv", "rt") as csv_file:
+    portfolio = [Stock(**stock) for stock in read_portfolio(csv_file)]
 
 pprint(portfolio)
-print(f"Total cost: {total_cost}")
+total_cost = sum([stock.price * stock.shares for stock in portfolio])
+
+stock0 = portfolio[0]
