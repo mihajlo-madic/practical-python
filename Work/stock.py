@@ -3,7 +3,7 @@ from typedproperty import String, Int, Float
 
 class Stock:
     """
-    Made for representing stock datatype
+    Made for representing stocks
     """
 
     name = String("name")
@@ -15,6 +15,7 @@ class Stock:
         self.shares = shares
         self.price = price
 
+    @property
     def cost(self):
         """
         Returns current value of a stock
@@ -26,4 +27,7 @@ class Stock:
         return amount * self.price
 
     def __repr__(self):
-        return f"Stock({self.name}, {self.shares}, {self.price})"
+        return f"Stock('{self.name}', {self.shares}, {self.price})"
+
+
+new_stock = Stock("GOOG", 100, 51.12)

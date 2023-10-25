@@ -106,7 +106,7 @@ data = text.encode('utf-8') # text -> bytes
 - first-class objects;
 - zip + types - parsing;
 
-## Program organization
+## 3. Program organization
 
 - functions are blackboxes - avoid logic leaks;
 - doc-string;
@@ -134,7 +134,7 @@ data = text.encode('utf-8') # text -> bytes
 # Day 2
 ---
 
-## Program organization (cont.)
+## 3. Program organization (cont.)
 
 - any python source file is a module;
 - `import` - loads and _executes_ a module;
@@ -157,7 +157,7 @@ data = text.encode('utf-8') # text -> bytes
 - duck typing;
 	- ![[Pasted image 20231024112319.png]]-> second one is better because of flexibility;
 
-### Classes and Objects
+### 4. Classes and Objects
 
 - `class` statement;
 - `__init__` function;
@@ -187,7 +187,7 @@ data = text.encode('utf-8') # text -> bytes
 - local dictionary (`my_instance.__dict__`) and class dictionary (`MyClass.__dict__` or `my_instance.__class__.__dict__`);
 - immediate parents are stored in tuple in each class;
 - inheritance chain - `__mro__` attribute (Method Resolution Order - MRO);
-		- MRO in multiple inheritance - children first, parents inorder - C3 linearization algorithm;
+	- MRO in multiple inheritance - children first, parents inorder - C3 linearization algorithm;
 - mixin pattern - primary use of multiple inheritance - `Loud` example;
 - `super()` - delegates to next class in MRO;
 - class variables - same as static attributes in C++;
@@ -198,7 +198,7 @@ data = text.encode('utf-8') # text -> bytes
 - decorator syntax;
 - `__slots__` attribute - more efficient memory;
 
-### Generators
+### 6. Generators
 
 - iteration protocol - iterables and iterators;
 - `StopIteration` error;
@@ -224,7 +224,7 @@ data = text.encode('utf-8') # text -> bytes
 
 > [!danger] [Generator tricks for systems programmers](http://www.dabeaz.com/generators/)
 
-### Advanced topics
+### 7. Advanced topics
 
 - `*args` and `**kwargs`;
   ![[Pasted image 20231024145518.png]]
@@ -236,5 +236,57 @@ data = text.encode('utf-8') # text -> bytes
 - decorators
 	- wrapper functions;
 	  ![[Pasted image 20231024152929.png]]
+- `@timethis` custom decorator;
 - built-in decorators;
-- `@staticmethod`, `@classmethod`, `@property`;
+	- `@staticmethod` - marking static methods, 
+	- `@classmethod` - receives `cls` object instead of `self`, making alternate constructors, 
+	- `@property` - defining properties;
+
+---
+## Day 3
+
+### 8. Testing and debugging
+
+- `assert` statement, `AssertionError` exception - used for conditions that should always be true;
+	- `assert isinstance(10, int), 'Expected int'` - e.g.
+- 'smoke test';
+- `unittest` module;
+	- `unittest.TestCase` subclass for testing;
+	- assertion types![[Pasted image 20231025100830.png]]
+	- [`pytest` module](https://docs.pytest.org/en/latest/);
+	- test example
+	  ![[Pasted image 20231025103519.png]]
+- `logging` module;
+	- logging in `except` block;
+	- perform startup configuration, get logger, and start logging;
+- debugging
+	- pasting the whole traceback into Google;
+	- _REPL_ - `-i` flag when running;
+	- `print` with `repr`;
+	- `breakpoint()` and `pdb.set_trace()` from `pdb` module
+	- `-m` - run in debugger;
+
+### 9. Packages
+
+- `import` _loads_ and _executes_ a module;
+- package - namespace for imports
+  ![[Pasted image 20231025104728.png]]
+- 2 problems
+	- imports in the package modules break;
+		- all imports are absoulute;
+	- main scripts break;
+		- solution:![[Pasted image 20231025105122.png]]
+		- another solution - top-level scripts:![[Pasted image 20231025105443.png]]
+	- `__init__.py` - make names top level;
+	- common code organization
+	  ![[Pasted image 20231025105404.png]]
+- [PyPi](https://pypi.org/) - python package index;
+- using `pip` for installing 3rd party packages;
+- virtual environments;
+- [packaging and distribution guide](https://packaging.python.org/en/latest/);
+- [how a venv works](https://realpython.com/python-virtual-environments-a-primer/);
+- distribution of code;
+	- toplevel `setup.py`;
+	  ![[Pasted image 20231025110810.png]]
+	- `MANIFEST.in` for additional files;
+	- `bash % python setup.py sdist` - creates `.tar.gz`/`.zip`;

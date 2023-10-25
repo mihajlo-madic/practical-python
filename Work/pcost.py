@@ -5,7 +5,7 @@
 
 import csv
 from pprint import pprint
-from stocks import Stock
+from stock import Stock
 
 
 def read_portfolio(lines: str):
